@@ -57,13 +57,13 @@ export default class App extends Component {
 		const listItems = this.state.rating.map((item, index) => {
 			if(index !== 0) {
 				return (
-									<li
-										data-rating={index}
-										className={this.state.rating[index]===true ? 'yellow' : 'grey'}
-										onMouseEnter={this.handleHover}
-										onMouseLeave={this.handleOut}
-										onClick={this.handleClick}
-									>*</li>
+                 <li
+                    data-rating={index}
+                    className={this.state.rating[index]===true ? 'yellow' : 'grey'}
+                    onMouseEnter={this.handleHover}
+                    onMouseLeave={this.handleOut}
+                    onClick={this.handleClick}
+                 >*</li>
 				)
 			}
 		})
