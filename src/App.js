@@ -8,35 +8,24 @@ export default class App extends Component {
 		this.state = {
 			initialRating: rating,
 			rating: rating,
-			clickState: 0
+			clickState: 0,
+			hoverState: 0
 		}
 		this.handleHover = this.handleHover.bind(this);
 		this.handleOut = this.handleOut.bind(this);
 		this.handleClick = this.handleClick.bind(this);
 	}
 
-	// componentDidUpdate() {
-	// 	let num = this.state.ratingc;
-	// 	let newArray = [null];
-	// 	for(let i=1; i <= 5; i++) {
-	// 		if (i<=num) {
-	// 			newArray[i] = true;
-	// 		}
-	// 		else {
-	// 			newArray[i] = false;
-	// 		}
-	// 	}
-	// 	this.setState({ ratingh: newArray });
-	// 	this.forceUpdate();
-	// }
-
-	handleHover(event) {
-		console.log('event: ', event.target);
-		let num = event.target.dataset.rating;
-		// this.setState({ rating: num+1});
+	update() {
+		let currentRating = 0;
+		if(this.state.clickState >= this.state.hoverState) {
+			currentRating = this.state.clickState;
+		} else {
+			currentRating = this.state.hoverState;
+		}
 		let newArray = [null];
 		for(let i=1; i <= 5; i++) {
-			if (i<=num) {
+			if (i<=currentRating) {
 				newArray[i] = true;
 			}
 			else {
@@ -47,18 +36,20 @@ export default class App extends Component {
 		this.forceUpdate();
 	}
 
+	handleHover(event) {
+		this.setState({ hoverState: event.target.dataset.rating });
+		this.update();
+	}
+
 	handleOut() {
-		let newArray = this.state.initialRating;
-		console.log('newArray in handleOut: ', newArray);
-		this.setState({ rating: newArray }); //this needs to be modified for click, check click state
-		this.forceUpdate();
+		this.setState({ hoverState: 0 });
+		this.update();
 	}
 
 	handleClick(event) {
-		this.setState({ clickState: event.target.dataset.rating })
+		this.setState({ clickState: event.target.dataset.rating });
+		this.update();
 	}
-
-	//add a click function
 
 	render () {
 		console.log('this.state.initialRating: ', this.state.initialRating);
@@ -77,7 +68,7 @@ export default class App extends Component {
 			}
 		})
 
-		console.log('listItems: ', listItems);
+		// console.log('listItems: ', listItems);
 
 
 		return (
@@ -87,7 +78,7 @@ export default class App extends Component {
 						{listItems}
 					</ul>
 				</div>
-	</div>
+			</div>
 		)
 	}
 }
